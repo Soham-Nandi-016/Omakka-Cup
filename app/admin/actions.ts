@@ -21,23 +21,10 @@ export interface AdminStudent {
   createdAt: string;
 }
 
-// ---------------------------------------------------------------------------
-// Admin password verification
-// ---------------------------------------------------------------------------
-// Reads the plain passphrase from the environment (set in .env.local) and
-// produces a bcrypt hash ONCE at module-load time using a fresh salt.
-// This sidesteps the entire "did the pre-computed hash match?" problem —
-// bcrypt.hashSync + bcrypt.compare are always internally consistent.
-//
-// bcrypt.hashSync is intentionally synchronous here: it runs once at cold
-// start, not per request, so the event-loop block is acceptable (~80 ms).
-const _adminPassphrase =
-  process.env.ADMIN_PASSWORD ?? "OssOkinawaCup2026!";
-
+const _adminPassphrase = process.env.ADMIN_PASSWORD ?? "OssOkinawaCup2026!";
 const ADMIN_PASSWORD_HASH = bcrypt.hashSync(_adminPassphrase, 10);
 
 export async function verifyAdminPassword(password: string): Promise<boolean> {
-  // timing-safe comparison — never use plain ===
   return await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
 }
 
@@ -56,7 +43,11 @@ export async function getRegistrations() {
     gender: s.gender,
     instructorName: s.instructorName,
     state: s.state,
+    phone: s.phone ?? "",
+    email: s.email ?? "",
+    style: s.style ?? "",
+    kata: s.kata ?? false,
+    kumite: s.kumite ?? false,
+    createdAt: s.createdAt ? s.createdAt.toISOString() : "",
   }));
 }
-
-// Force Vercel Cache Bust 2026
