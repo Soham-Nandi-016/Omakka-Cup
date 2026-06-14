@@ -46,7 +46,7 @@ export async function getRegistrations(): Promise<AdminStudent[]> {
     orderBy: { createdAt: "desc" },
   });
 
-  return students.map((s) => ({
+  return students.map((s: any) => ({
     id:            s.id,
     name:          s.name,
     dob:           s.dob.toISOString().split("T")[0],
