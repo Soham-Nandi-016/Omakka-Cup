@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
@@ -54,7 +54,7 @@ export async function submitRegistration(formData: FormData): Promise<SubmitResu
   }
 
   try {
-    await prisma.student.create({
+    await getPrisma().student.create({
       data: {
         name:           data.name.trim(),
         address:        data.address.trim(),

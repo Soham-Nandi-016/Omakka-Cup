@@ -1,7 +1,7 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export interface AdminStudent {
   id: number;
@@ -29,7 +29,7 @@ export async function verifyAdminPassword(password: string): Promise<boolean> {
 }
 
 export async function getRegistrations() {
-  const students = await prisma.student.findMany({
+  const students = await getPrisma().student.findMany({
     orderBy: { createdAt: "desc" },
   });
 
