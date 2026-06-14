@@ -58,3 +58,5 @@ export async function getRegistrations() {
     state: s.state,
   }));
 }
+
+// Force Vercel Cache Bust 2026
