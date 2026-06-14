@@ -41,7 +41,7 @@ export async function verifyAdminPassword(password: string): Promise<boolean> {
   return await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
 }
 
-export async function getRegistrations(): Promise<AdminStudent[]> {
+export async function getRegistrations() {
   const students = await prisma.student.findMany({
     orderBy: { createdAt: "desc" },
   });
