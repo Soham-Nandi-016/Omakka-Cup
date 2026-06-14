@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Student {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  address             String   @db.Text
+  phone               String
+  email               String
+  gender              Gender
+  dob                 DateTime
+  age                 Int
+  state               String
+  belt                Belt
+  style               String
+  instructorName      String
+  weight              Float
+  kata                Boolean  @default(true)
+  kumite              Boolean  @default(true)
+  declarationAccepted Boolean  @default(false)
+  createdAt           DateTime @default(now())
+
+  @@index([belt])
+  @@index([age])
+  @@index([weight])
+  @@index([gender])
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Belt {
+  WHITE
+  YELLOW
+  ORANGE
+  GREEN
+  BLUE
+  PURPLE
+  BROWN
+  BLACK
+}

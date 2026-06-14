@@ -1,26 +1,170 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Colors */
+  --color-brand-crimson: #800000;
+  --color-brand-crimson-light: #a30000;
+  --color-brand-gold: #ffd700;
+  --color-brand-gold-light: #ffea70;
+  --color-surface-900: #141414;
+  --color-surface-950: #0a0a0a;
+
+  /* Shadows */
+  --shadow-crimson-glow: 0 0 20px rgba(163, 0, 0, 0.5);
+  --shadow-gold-glow: 0 0 20px rgba(255, 215, 0, 0.3);
+  --shadow-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Animations & Keyframes */
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-up: fade-up 0.5s ease-out forwards;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Register Custom Tailwind v4 Utility Component Components */
+@utility card {
+  background-color: var(--color-surface-900);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-card-shadow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility card-gold {
+  background-color: rgba(255, 215, 0, 0.03);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 0.75rem;
+}
+
+@utility card-crimson {
+  background-color: rgba(128, 0, 0, 0.03);
+  border: 1px solid rgba(128, 0, 0, 0.15);
+  border-radius: 0.75rem;
+}
+
+@utility btn-crimson {
+  background-color: var(--color-brand-crimson);
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: var(--color-brand-crimson-light);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility btn-outline {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  &:hover {
+    border-color: white;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+}
+
+@utility form-input {
+  width: 100%;
+  background-color: var(--color-surface-950);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  transition: all 0.2s ease;
+  &:focus {
+    outline: none;
+    border-color: var(--color-brand-gold);
+    box-shadow: var(--shadow-gold-glow);
+  }
+}
+
+@utility form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.375rem;
+}
+
+@utility form-error {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: #ff4d4d;
+  margin-top: 0.375rem;
+}
+
+@utility section-tag-crimson {
+  display: inline-block;
+  background-color: rgba(128, 0, 0, 0.2);
+  border: 1px solid rgba(128, 0, 0, 0.3);
+  color: #ff4d4d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+@utility btn-gold {
+  background-color: var(--color-brand-gold);
+  color: #0a0a0a;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: var(--color-brand-gold-light);
+  }
+}
+
+@utility roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  & thead tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  & th {
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.35);
+    white-space: nowrap;
+  }
+
+  & td {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: middle;
+  }
+
+  & tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  & tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.025);
+  }
+}
+
+@utility belt-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
