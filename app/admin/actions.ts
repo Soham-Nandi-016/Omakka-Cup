@@ -47,20 +47,14 @@ export async function getRegistrations() {
   });
 
   return students.map((s: any) => ({
-    id:            s.id,
-    name:          s.name,
-    dob:           s.dob.toISOString().split("T")[0],
-    age:           s.age,
-    weight:        s.weight,
-    belt:          s.belt,
-    gender:        s.gender,
+    id: s.id,
+    name: s.name,
+    dob: s.dob ? s.dob.toISOString().split("T")[0] : "",
+    age: s.age,
+    weight: s.weight,
+    belt: s.belt,
+    gender: s.gender,
     instructorName: s.instructorName,
-    state:         s.state,
-    phone:         s.phone,
-    email:         s.email,
-    style:         s.style,
-    kata:          s.kata,
-    kumite:        s.kumite,
-    createdAt:     s.createdAt.toISOString(),
+    state: s.state,
   }));
 }
