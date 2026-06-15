@@ -9,11 +9,7 @@ const connectionString = process.env.DATABASE_URL || process.env.NEXT_PUBLIC_BUI
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    datasources: {
-      db: {
-        url: connectionString,
-      },
-    },
-  });
+    datasourceUrl: connectionString,
+  } as any);
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
