@@ -1,9 +1,4 @@
-import "dotenv/config";
-import { defineConfig, env } from "prisma/config";
-
-export default defineConfig({
-  schema: "prisma/schema.prisma",
-  datasource: {
-    url: env("DATABASE_URL"),
-  },
-});
+// Prisma has been removed. This file is kept as a placeholder to avoid
+// breaking any tooling that references it. All database access now goes
+// through the native pg Pool defined in lib/prisma.ts.
+export {};

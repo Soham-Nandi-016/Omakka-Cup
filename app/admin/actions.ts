@@ -1,7 +1,7 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
+import { pool } from "@/lib/prisma";
 
 export interface AdminStudent {
   id: number;
@@ -28,12 +28,26 @@ export async function verifyAdminPassword(password: string): Promise<boolean> {
   return await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
 }
 
-export async function getRegistrations() {
-  const students = await prisma.student.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+export async function getRegistrations(): Promise<AdminStudent[]> {
+  const { rows } = await pool.query<{
+    id: number;
+    name: string;
+    dob: Date | null;
+    age: number;
+    weight: number;
+    belt: string;
+    gender: string;
+    "instructorName": string;
+    state: string;
+    phone: string | null;
+    email: string | null;
+    style: string | null;
+    kata: boolean | null;
+    kumite: boolean | null;
+    "createdAt": Date | null;
+  }>('SELECT * FROM "Student" ORDER BY "createdAt" DESC');
 
-  return students.map((s: any) => ({
+  return rows.map((s) => ({
     id: s.id,
     name: s.name,
     dob: s.dob ? s.dob.toISOString().split("T")[0] : "",

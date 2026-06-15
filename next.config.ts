@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  serverExternalPackages: ["@prisma/client"],
+  serverExternalPackages: ["pg"],
 };
 
 export default nextConfig;

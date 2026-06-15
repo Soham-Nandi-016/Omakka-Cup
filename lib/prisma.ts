@@ -1,16 +1,19 @@
-import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+
+const CONNECTION_STRING =
+  "postgresql://postgres:OssOmakkaCup2026!@db.hksgtclthnehcoqkplpb.supabase.co:5432/postgres";
 
 declare global {
-  var prisma: PrismaClient | undefined;
+  // Prevent multiple Pool instances in dev hot-reload
+  // eslint-disable-next-line no-var
+  var _pgPool: Pool | undefined;
 }
 
-const connectionString = "postgresql://postgres:OssOmakkaCup2026!@db.hksgtclthnehcoqkplpb.supabase.co:5432/postgres";
-
-if (!global.prisma) {
-  global.prisma = new PrismaClient({
-    log: ["query"],
-    datasourceUrl: connectionString,
-  } as any);
+if (!global._pgPool) {
+  global._pgPool = new Pool({
+    connectionString: CONNECTION_STRING,
+    ssl: { rejectUnauthorized: false },
+  });
 }
 
-export const prisma = global.prisma;
+export const pool = global._pgPool;

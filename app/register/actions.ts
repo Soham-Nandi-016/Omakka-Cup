@@ -1,6 +1,6 @@
 "use server";
 
-import { getPrisma } from "@/lib/prisma";
+import { pool } from "@/lib/prisma";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
@@ -54,25 +54,29 @@ export async function submitRegistration(formData: FormData): Promise<SubmitResu
   }
 
   try {
-    await getPrisma().student.create({
-      data: {
-        name:           data.name.trim(),
-        address:        data.address.trim(),
-        phone:          data.phone,
-        email:          data.email.toLowerCase().trim(),
-        gender:         data.gender,
-        dob:            dobDate,
+    await pool.query(
+      `INSERT INTO "Student"
+         (name, address, phone, email, gender, dob, age, state, belt, style,
+          "instructorName", weight, kata, kumite, "declarationAccepted", "createdAt")
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW())`,
+      [
+        data.name.trim(),
+        data.address.trim(),
+        data.phone,
+        data.email.toLowerCase().trim(),
+        data.gender,
+        dobDate,
         age,
-        state:          data.state,
-        belt:           data.belt,
-        style:          data.style,
-        instructorName: data.instructorName.trim(),
-        weight:         weightNum,
-        kata:           true,
-        kumite:         true,
-        declarationAccepted: true,
-      },
-    });
+        data.state,
+        data.belt,
+        data.style,
+        data.instructorName.trim(),
+        weightNum,
+        true,
+        true,
+        true,
+      ]
+    );
 
     revalidatePath("/admin");
 
