@@ -4,9 +4,16 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export function getPrisma() {
-  if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = new PrismaClient();
-  }
-  return globalForPrisma.prisma;
-}
+const connectionString = process.env.DATABASE_URL || process.env.NEXT_PUBLIC_BUILD_DB_URL;
+
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    datasources: {
+      db: {
+        url: connectionString,
+      },
+    },
+  });
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
