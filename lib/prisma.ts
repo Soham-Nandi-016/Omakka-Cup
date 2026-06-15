@@ -1,20 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+declare global {
+  var prisma: PrismaClient | undefined;
+}
 
 const connectionString = "postgresql://postgres:OssOmakkaCup2026!@db.hksgtclthnehcoqkplpb.supabase.co:5432/postgres";
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
+if (!global.prisma) {
+  global.prisma = new PrismaClient({
     log: ["query"],
-    datasources: {
-      db: {
-        url: connectionString,
-      },
-    },
+    datasourceUrl: connectionString,
   } as any);
+}
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+export const prisma = global.prisma;
