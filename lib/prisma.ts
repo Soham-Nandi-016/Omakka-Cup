@@ -1,7 +1,8 @@
 import { Pool } from "pg";
 
+// Changed to use the official Supabase transaction/session pooler domain
 const CONNECTION_STRING =
-  "postgresql://postgres:OssOmakkaCup2026!@db.hksgtclthnehcoqkplpb.supabase.co:5432/postgres";
+  "postgresql://postgres.hksgtclthnehcoqkplpb:OssOmakkaCup2026!@aws-0-ap-south-1.pooler.supabase.com:5432/postgres";
 
 declare global {
   // Prevent multiple Pool instances in dev hot-reload
