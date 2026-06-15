@@ -17,6 +17,7 @@ export interface SubmitResult {
   errors?: Record<string, string[]>;
 }
 import { INDIAN_STATES, BELT_OPTIONS, KARATE_STYLES, DECLARATION_TEXT } from "@/lib/constants";
+import { submitRegistration } from "@/app/register/actions";
 
 const schema = z.object({
   name:           z.string().min(2, "Full name must be at least 2 characters"),
@@ -131,13 +132,16 @@ export default function RegistrationForm() {
     setResult(null);
     setIsPending(true);
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+      // Build FormData for the Next.js server action
+      // (declarationAccepted is boolean in the client schema → must be string "true" for the server action)
+      const formData = new FormData();
+      Object.entries(values).forEach(([key, value]) => {
+        formData.append(key, String(value));
       });
-      const data = await response.json();
+
+      const data = await submitRegistration(formData);
       setResult(data);
+
       if (data.success) {
         // ── Persist this registration to localStorage ──────────────────────
         const computedAge = computeAge(values.dob);
@@ -161,9 +165,10 @@ export default function RegistrationForm() {
         router.refresh();
       }
     } catch (err) {
+      console.error("[RegistrationForm] submit error:", err);
       setResult({
         success: false,
-        message: "Failed to connect to the server. Ensure the backend is running.",
+        message: "Submission failed. Please check your connection and try again.",
       });
     } finally {
       setIsPending(false);
