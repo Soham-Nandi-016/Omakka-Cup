@@ -21,6 +21,7 @@ export interface AdminStudent {
   createdAt: string;
 }
 
+// Hashed once at cold-start — bcrypt.hashSync is intentional here (server only)
 const _adminPassphrase = process.env.ADMIN_PASSWORD ?? "OssOkinawaCup2026!";
 const ADMIN_PASSWORD_HASH = bcrypt.hashSync(_adminPassphrase, 10);
 
@@ -37,14 +38,14 @@ export async function getRegistrations(): Promise<AdminStudent[]> {
     weight: number;
     belt: string;
     gender: string;
-    "instructorName": string;
+    instructorName: string;
     state: string;
     phone: string | null;
     email: string | null;
     style: string | null;
     kata: boolean | null;
     kumite: boolean | null;
-    "createdAt": Date | null;
+    createdAt: Date | null;
   }>('SELECT * FROM "Student" ORDER BY "createdAt" DESC');
 
   return rows.map((s) => ({

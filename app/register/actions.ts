@@ -58,7 +58,7 @@ export async function submitRegistration(formData: FormData): Promise<SubmitResu
       `INSERT INTO "Student"
          (name, address, phone, email, gender, dob, age, state, belt, style,
           "instructorName", weight, kata, kumite, "declarationAccepted", "createdAt")
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW())`,
+       VALUES ($1, $2, $3, $4, $5::\"Gender\", $6, $7, $8, $9::\"Belt\", $10, $11, $12, $13, $14, $15, NOW())`,
       [
         data.name.trim(),
         data.address.trim(),
