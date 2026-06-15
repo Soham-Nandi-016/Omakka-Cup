@@ -19,9 +19,11 @@ if (!global._pgPool) {
   global._pgPool = new Pool({
     connectionString,
     ssl: { rejectUnauthorized: false },
-    // Conservative pool sizing — Supabase free tier has a 60-connection limit
-    max: 5,
-    idleTimeoutMillis: 30_000,
+    // max:1 is critical for Vercel serverless — each function invocation is
+    // short-lived, so we never need more than 1 connection per instance.
+    // Higher values exhaust Supabase free-tier's 60-connection limit fast.
+    max: 1,
+    idleTimeoutMillis: 0,       // release immediately when idle
     connectionTimeoutMillis: 10_000,
   });
 }
