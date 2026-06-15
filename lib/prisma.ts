@@ -1,9 +1,7 @@
 import { Pool } from "pg";
-
-// Changed to use the official Supabase transaction/session pooler domain
+// Replace your current string with this exact one:
 const CONNECTION_STRING =
   "postgresql://postgres.hksgtclthnehcoqkplpb:OssOmakkaCup2026!@aws-0-ap-south-1.pooler.supabase.com:5432/postgres";
-
 declare global {
   // Prevent multiple Pool instances in dev hot-reload
   // eslint-disable-next-line no-var
