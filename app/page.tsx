@@ -75,12 +75,12 @@ export default function HomePage() {
           <p className="text-lg sm:text-xl md:text-2xl font-semibold text-white/60 mb-2">
             All India Open Karate Championship
           </p>
-          <p className="text-sm text-white/40 tracking-widest uppercase mb-10">
+          <p className="text-[11px] sm:text-sm text-white/40 tracking-widest uppercase mb-10 px-2">
             Organised by – Okinawa Martial Arts Karate Kobudo Association
           </p>
 
           {/* Countdown */}
-          <div className="card-crimson p-6 sm:p-8 rounded-2xl mb-8 inline-block">
+          <div className="card-crimson p-4 sm:p-6 md:p-8 rounded-2xl mb-8 w-full">
             <p className="text-xs font-bold tracking-[0.2em] uppercase text-white/40 mb-5">
               Tournament Begins In
             </p>

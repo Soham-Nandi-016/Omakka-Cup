@@ -34,20 +34,20 @@ function Digit({ value, label }: { value: number; label: string }) {
   }, [value, prev]);
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-1 sm:gap-2">
       <div
-        className={`relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl
+        className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-xl sm:rounded-2xl
           bg-surface-800 border border-white/10 shadow-card-shadow
           flex items-center justify-center overflow-hidden
           transition-transform duration-300 ${flip ? "scale-95" : "scale-100"}`}
       >
         {/* top shine */}
         <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
-        <span className="text-3xl sm:text-4xl md:text-5xl font-black text-white tabular-nums">
+        <span className="text-2xl sm:text-3xl md:text-5xl font-black text-white tabular-nums">
           {String(value).padStart(2, "0")}
         </span>
       </div>
-      <span className="text-[10px] sm:text-xs font-bold tracking-[0.18em] uppercase text-white/40">
+      <span className="text-[9px] sm:text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase text-white/40">
         {label}
       </span>
     </div>
@@ -84,13 +84,13 @@ export default function CountdownTimer() {
       {isOver ? (
         <p className="text-2xl font-bold text-brand-gold">Tournament Day is Here!</p>
       ) : (
-        <div className="flex items-start justify-center gap-3 sm:gap-4">
+        <div className="flex items-start justify-center gap-1.5 sm:gap-3 md:gap-4">
           <Digit value={timeLeft.days}    label="Days" />
-          <span className="text-3xl sm:text-4xl font-black text-brand-gold/60 mt-6 sm:mt-7">:</span>
+          <span className="text-2xl sm:text-3xl md:text-4xl font-black text-brand-gold/60 mt-5 sm:mt-6">:</span>
           <Digit value={timeLeft.hours}   label="Hours" />
-          <span className="text-3xl sm:text-4xl font-black text-brand-gold/60 mt-6 sm:mt-7">:</span>
+          <span className="text-2xl sm:text-3xl md:text-4xl font-black text-brand-gold/60 mt-5 sm:mt-6">:</span>
           <Digit value={timeLeft.minutes} label="Mins" />
-          <span className="text-3xl sm:text-4xl font-black text-brand-gold/60 mt-6 sm:mt-7">:</span>
+          <span className="text-2xl sm:text-3xl md:text-4xl font-black text-brand-gold/60 mt-5 sm:mt-6">:</span>
           <Digit value={timeLeft.seconds} label="Secs" />
         </div>
       )}
